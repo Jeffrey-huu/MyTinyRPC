@@ -21,7 +21,6 @@
     m_listen_fds.insert(event->getFd()); \
     DEBUGLOG("add event success, fd[%d]", event->getFd()) \
 
-
 #define DELETE_TO_EPOLL() \
     auto it = m_listen_fds.find(event->getFd()); \
     if (it == m_listen_fds.end()) { \
@@ -37,7 +36,6 @@
     DEBUGLOG("delete event success, fd[%d]", event->getFd()); \
 
 namespace MyTinyRPC {
-
 	static thread_local EventLoop* t_current_eventloop = NULL;
 	static int g_epoll_max_timeout = 10000;
 	static int g_epoll_max_events = 10;
@@ -62,7 +60,7 @@ namespace MyTinyRPC {
 	}
 
 	EventLoop::~EventLoop() {
-	close(m_epoll_fd);
+		close(m_epoll_fd);
 		if (m_wakeup_fd_event) {
 			delete m_wakeup_fd_event;
 			m_wakeup_fd_event = NULL;
@@ -102,7 +100,6 @@ namespace MyTinyRPC {
 		addEpollEvent(m_wakeup_fd_event);
 	}
 
-
 	void EventLoop::loop() {
 		m_is_looping = true;
 		while(!m_stop_flag) {
@@ -134,14 +131,14 @@ namespace MyTinyRPC {
 				for (int i = 0; i < rt; ++i) {
 					epoll_event trigger_event = result_events[i];
 					FdEvent* fd_event = static_cast<FdEvent*>(trigger_event.data.ptr);
+
 					if (fd_event == NULL) {
 						ERRORLOG("fd_event = NULL, continue");
-					continue;
+						continue;
 					}
 
 					// int event = (int)(trigger_event.events); 
 					// DEBUGLOG("unkonow event = %d", event);
-
 					if (trigger_event.events & EPOLLIN) { 
 						// DEBUGLOG("fd %d trigger EPOLLIN event", fd_event->getFd())
 						addTask(fd_event->handler(FdEvent::IN_EVENT));

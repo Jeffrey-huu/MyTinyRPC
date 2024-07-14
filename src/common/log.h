@@ -117,7 +117,7 @@ namespace MyTinyRPC {
 			static void InitGlobalLogger(int type = 1);
 
 		private:
-			LogLevel m_set_level;
+			LogLevel m_set_level;  // 日志级别限制
 			std::vector<std::string> m_buffer;
 			std::vector<std::string> m_app_buffer;
 			Mutex m_mutex;
@@ -136,24 +136,23 @@ namespace MyTinyRPC {
 
 
 	class LogEvent {
-	public:
-		LogEvent(LogLevel level) : m_level(level) {}
+		public:
+			LogEvent(LogLevel level) : m_level(level) {}
 
-		std::string getFileName() const {
-			return m_file_name;  
-		}
-		LogLevel getLogLevel() const {
-			return m_level;
-		}
-		std::string toString();
+			std::string getFileName() const {
+				return m_file_name;  
+			}
+			LogLevel getLogLevel() const {
+				return m_level;
+			}
+			std::string toString();
 
-
-	private:
-		std::string m_file_name;  // 文件名
-		int32_t m_file_line;  // 行号
-		int32_t m_pid;  // 进程号
-		int32_t m_thread_id;  // 线程号
-		LogLevel m_level;     //日志级别
+		private:
+			std::string m_file_name;  // 文件名
+			int32_t m_file_line;  // 行号
+			int32_t m_pid;  // 进程号
+			int32_t m_thread_id;  // 线程号
+			LogLevel m_level;     //日志级别
 	};
 
 

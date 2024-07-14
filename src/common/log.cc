@@ -163,7 +163,7 @@ namespace MyTinyRPC {
 
 	void Logger::pushLog(const std::string& msg) {
 		if (m_type == 0) {
-			fprintf(stdout, "%s\n", (msg + "\n").c_str());
+			fprintf(stdout, "%s", (msg).c_str());
 			return;
 		}
 		ScopeMutex<Mutex> lock(m_mutex);
@@ -175,10 +175,6 @@ namespace MyTinyRPC {
 		ScopeMutex<Mutex> lock(m_app_mutex);
 		m_app_buffer.push_back(msg);
 		lock.unlock();
-	}
-
-	void Logger::log() {
-
 	}
 
 	AsyncLogger::AsyncLogger(const std::string& file_name, const std::string& file_path, int max_size) 

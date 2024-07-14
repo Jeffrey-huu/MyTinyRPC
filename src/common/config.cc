@@ -11,7 +11,7 @@
 #define READ_STR_FROM_XML_NODE(name, parent) \
 	TiXmlElement* name##_node = parent->FirstChildElement(#name); \
 	if (!name##_node|| !name##_node->GetText()) { \
-		printf("Start MyTinyRPC server error, failed to read config file %s\n", #name); \
+		printf("Start MyTinyRPC server error, failed to read config parameters %s\n", #name); \
 		exit(0); \
 	} \
 	std::string name##_str = std::string(name##_node->GetText()); \

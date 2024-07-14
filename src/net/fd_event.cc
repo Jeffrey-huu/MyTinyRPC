@@ -12,9 +12,7 @@ namespace MyTinyRPC {
 		memset(&m_listen_events, 0, sizeof(m_listen_events));
 	}
 
-	FdEvent::~FdEvent() {
-
-	}
+	FdEvent::~FdEvent() {}
 
 	std::function<void()> FdEvent::handler(TriggerEvent event) {
 		if (event == TriggerEvent::IN_EVENT) {
@@ -45,7 +43,7 @@ namespace MyTinyRPC {
 		m_listen_events.data.ptr = this;
 	}
 
-	void FdEvent::cancle(TriggerEvent event_type) {
+	void FdEvent::cancel(TriggerEvent event_type) {
 		if (event_type == TriggerEvent::IN_EVENT) {
 			m_listen_events.events &= (~EPOLLIN);
 		} else {
