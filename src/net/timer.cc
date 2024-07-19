@@ -35,10 +35,10 @@ namespace MyTinyRPC {
 		auto it = m_pending_events.begin();
 
 		for (it = m_pending_events.begin(); it != m_pending_events.end(); ++it) {
-			if ((*it).first <= now) {
-				if (!(*it).second->isCancled()) {
-					tmps.push_back((*it).second);
-					tasks.push_back(std::make_pair((*it).second->getArriveTime(), (*it).second->getCallBack()));
+			if (it->first <= now) {
+				if (!it->second->isCancelled()) {
+					tmps.push_back(it->second);
+					tasks.push_back(std::make_pair(it->second->getArriveTime(), it->second->getCallBack()));
 				}
 			} else {
 				break;
@@ -57,16 +57,16 @@ namespace MyTinyRPC {
 			}
 		}
 
-		resetArriveTime();
+		setHeadArriveTime();
 
 		for (auto i: tasks) {
 			if (i.second) {
-			i.second();
+				i.second();
 			}
 		}
 	}
 
-	void Timer::resetArriveTime() {
+	void Timer::setHeadArriveTime() {
 		ScopeMutex<Mutex> lock(m_mutex);
 		auto tmp = m_pending_events;
 		lock.unlock();
@@ -78,17 +78,17 @@ namespace MyTinyRPC {
 		int64_t now = getNowMs();
 
 		auto it = tmp.begin();
-		int64_t inteval = 0;
+		int64_t interval = 0;
 		if (it->second->getArriveTime() > now) {
-			inteval = it->second->getArriveTime() - now;
+			interval = it->second->getArriveTime() - now;
 		} else {
-			inteval = 100;
+			interval = 100; // for god save
 		}
 
 		timespec ts;
 		memset(&ts, 0, sizeof(ts));
-		ts.tv_sec = inteval / 1000;
-		ts.tv_nsec = (inteval % 1000) * 1000000;
+		ts.tv_sec = interval / 1000;
+		ts.tv_nsec = (interval % 1000) * 1000000;
 
 		itimerspec value;
 		memset(&value, 0, sizeof(value));
@@ -109,7 +109,7 @@ namespace MyTinyRPC {
 			is_reset_timerfd = true;
 		} else {
 			auto it = m_pending_events.begin();
-			if ((*it).second->getArriveTime() > event->getArriveTime()) {
+			if (it->second->getArriveTime() > event->getArriveTime()) {
 				is_reset_timerfd = true;
 			}
 		}
@@ -117,12 +117,12 @@ namespace MyTinyRPC {
 		lock.unlock();
 
 		if (is_reset_timerfd) {
-			resetArriveTime();
+			setHeadArriveTime();
 		}
 	}
 
 	void Timer::deleteTimerEvent(TimerEvent::s_ptr event) {
-		event->setCancled(true);
+		event->setCancelled(true);
 
 		ScopeMutex<Mutex> lock(m_mutex);
 

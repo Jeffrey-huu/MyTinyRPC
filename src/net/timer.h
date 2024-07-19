@@ -17,8 +17,8 @@ namespace MyTinyRPC {
             void onTimer(); // 当发送了 IO 事件后，eventloop 会执行这个回调函数
 
         private:
-            void resetArriveTime();
-            std::multimap<int64_t, TimerEvent::s_ptr> m_pending_events;
+            void setHeadArriveTime();
+            std::multimap<int64_t, TimerEvent::s_ptr> m_pending_events; // arrive_time : time_event
             Mutex m_mutex;
     };
 }

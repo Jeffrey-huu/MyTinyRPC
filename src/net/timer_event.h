@@ -15,12 +15,12 @@ namespace MyTinyRPC {
 				return m_arrive_time;
 			}
 
-			void setCancled(bool value) {
-				m_is_cancled = value;
+			void setCancelled(bool value) {
+				m_is_cancelled = value;
 			}
 
-			bool isCancled() {
-				return m_is_cancled;
+			bool isCancelled() {
+				return m_is_cancelled;
 			}
 
 			bool isRepeated() {
@@ -37,7 +37,7 @@ namespace MyTinyRPC {
 			int64_t m_arrive_time;    // ms
 			int64_t m_interval;       // ms
 			bool m_is_repeated {false};
-			bool m_is_cancled {false}; 
+			bool m_is_cancelled {false}; 
 
 			std::function<void()> m_task;
 	};

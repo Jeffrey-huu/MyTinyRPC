@@ -46,8 +46,10 @@ namespace MyTinyRPC {
 	void FdEvent::cancel(TriggerEvent event_type) {
 		if (event_type == TriggerEvent::IN_EVENT) {
 			m_listen_events.events &= (~EPOLLIN);
+			m_read_callback = nullptr;
 		} else {
 			m_listen_events.events &= (~EPOLLOUT);
+			m_write_callback = nullptr;
 		}
 	}
 
