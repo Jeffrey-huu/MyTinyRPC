@@ -1,5 +1,5 @@
-#ifndef ROCKET_NET_TIMEREVENT
-#define ROCKET_NET_TIMEREVENT
+#ifndef MyTinyRPC_NET_TIMEREVENT
+#define MyTinyRPC_NET_TIMEREVENT
 
 #include <functional>
 #include <memory>

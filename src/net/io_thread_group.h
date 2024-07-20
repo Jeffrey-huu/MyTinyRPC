@@ -1,5 +1,5 @@
-#ifndef ROCKET_NET_IO_THREAD_GROUP_H
-#define ROCKET_NET_IO_THREAD_GROUP_H
+#ifndef MyTinyRPC_NET_IO_THREAD_GROUP_H
+#define MyTinyRPC_NET_IO_THREAD_GROUP_H
 
 #include <vector>
 #include "src/common/log.h"

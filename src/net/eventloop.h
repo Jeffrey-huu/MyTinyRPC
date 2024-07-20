@@ -1,5 +1,5 @@
-#ifndef ROCKET_NET_EVENTLOOP_H
-#define ROCKET_NET_EVENTLOOP_H
+#ifndef MyTinyRPC_NET_EVENTLOOP_H
+#define MyTinyRPC_NET_EVENTLOOP_H
 
 #include <pthread.h>
 #include <set>

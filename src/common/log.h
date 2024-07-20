@@ -1,5 +1,5 @@
-#ifndef ROCKET_COMMON_LOG_H
-#define ROCKET_COMMON_LOG_H
+#ifndef MyTinyRPC_COMMON_LOG_H
+#define MyTinyRPC_COMMON_LOG_H
 
 #include <string>
 #include <queue>

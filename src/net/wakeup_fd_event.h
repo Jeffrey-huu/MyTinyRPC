@@ -1,5 +1,5 @@
-#ifndef ROCKET_NET_WAKEUP_FDEVENT_H
-#define ROCKET_NET_WAKEUP_FDEVENT_H
+#ifndef MyTinyRPC_NET_WAKEUP_FDEVENT_H
+#define MyTinyRPC_NET_WAKEUP_FDEVENT_H
 
 #include "src/net/fd_event.h"
 

@@ -1,5 +1,5 @@
-#ifndef ROCKET_COMMON_RUN_TIME_H
-#define ROCKET_COMMON_RUN_TIME_H
+#ifndef MyTinyRPC_COMMON_RUN_TIME_H
+#define MyTinyRPC_COMMON_RUN_TIME_H
 
 #include <string>
 

@@ -3,24 +3,6 @@
 #include "src/net/tcp/net_addr.h"
 
 namespace MyTinyRPC {
-	bool IPNetAddr::CheckValid(const std::string& addr) {
-		size_t i = addr.find_first_of(":");
-		if (i == addr.npos) {
-			return false;
-		}
-		std::string ip = addr.substr(0, i);
-		std::string port = addr.substr(i + 1, addr.size() - i - 1);
-		if (ip.empty() || port.empty()) {
-			return false;
-		}
-
-		int iport = std::atoi(port.c_str());
-		if (iport <= 0 || iport > 65536) {
-			return false;
-		}
-		return true;
-	}
-
 	IPNetAddr::IPNetAddr(const std::string& ip, uint16_t port) : m_ip(ip), m_port(port) {
 		memset(&m_addr, 0, sizeof(m_addr));
 
@@ -65,6 +47,29 @@ namespace MyTinyRPC {
 		std::string re;
 		re = m_ip + ":" + std::to_string(m_port);
 		return re;
+	}
+
+	bool IPNetAddr::CheckValid(const std::string& addr) {
+		size_t i = addr.find_first_of(":");
+		if (i == addr.npos) {
+			return false;
+		}
+
+		std::string ip = addr.substr(0, i);
+		std::string port = addr.substr(i + 1, addr.size() - i - 1);
+		if (ip.empty() || port.empty()) {
+			return false;
+		}
+
+		if (inet_addr(ip.c_str()) == INADDR_NONE) {
+			return false;
+		}
+
+		int iport = std::atoi(port.c_str());
+		if (iport <= 0 || iport > 65536) {
+			return false;
+		}
+		return true;
 	}
 
 	bool IPNetAddr::checkValid() {

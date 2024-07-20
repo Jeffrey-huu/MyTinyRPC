@@ -1,5 +1,5 @@
-#ifndef ROCKET_NET_TCP_NET_ADDR_H
-#define ROCKET_NET_TCP_NET_ADDR_H
+#ifndef MyTinyRPC_NET_TCP_NET_ADDR_H
+#define MyTinyRPC_NET_TCP_NET_ADDR_H
 
 #include <arpa/inet.h>
 #include <netinet/in.h>
@@ -7,7 +7,6 @@
 #include <memory>
 
 namespace MyTinyRPC {
-
 	class NetAddr {
 		public:
 			typedef std::shared_ptr<NetAddr> s_ptr;
@@ -18,23 +17,22 @@ namespace MyTinyRPC {
 			virtual bool checkValid() = 0;
 	};
 
-
 	class IPNetAddr : public NetAddr {
 		public:
-			static bool CheckValid(const std::string& addr);
 			IPNetAddr(const std::string& ip, uint16_t port);
-			IPNetAddr(const std::string& addr);
+			IPNetAddr(const std::string& addr); // ex. 0.0.0.0:88
 			IPNetAddr(sockaddr_in addr);
 			sockaddr* getSockAddr();
 			socklen_t getSockLen();
 			int getFamily();
 			std::string toString();
-			bool checkValid();
+			bool checkValid(); // to self check
+			static bool CheckValid(const std::string& addr);
+
 		private:
 			std::string m_ip;
 			uint16_t m_port {0};
 			sockaddr_in m_addr;
 	};
-
 }
 #endif

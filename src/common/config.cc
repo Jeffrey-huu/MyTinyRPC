@@ -24,13 +24,13 @@ namespace MyTinyRPC {
 	}
 
 	void Config::SetGlobalConfig(const char* xmlfile) {
-	if (g_config == NULL) {
-		if (xmlfile != NULL) {
-			g_config = new Config(xmlfile);
-		} else {
-			g_config = new Config();
+		if (g_config == NULL) {
+			if (xmlfile != NULL) {
+				g_config = new Config(xmlfile);
+			} else {
+				g_config = new Config();
+			}
 		}
-	}
 	}
 
 	Config::~Config() {
@@ -42,6 +42,7 @@ namespace MyTinyRPC {
 
 	Config::Config() {
 		m_log_level = "DEBUG";
+		m_io_threads = 2;
 	}
 	
 	Config::Config(const char* xmlfile) {

@@ -1,5 +1,5 @@
-#ifndef ROCKET_COMMON_UTIL_H
-#define ROCKET_COMMON_UTIL_H
+#ifndef MyTinyRPC_COMMON_UTIL_H
+#define MyTinyRPC_COMMON_UTIL_H
 
 #include <sys/types.h>
 #include <unistd.h>

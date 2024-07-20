@@ -1,5 +1,5 @@
-#ifndef ROCKET_NET_TIMER_H
-#define ROCKET_NET_TIMER_H
+#ifndef MyTinyRPC_NET_TIMER_H
+#define MyTinyRPC_NET_TIMER_H
 
 #include <map>
 #include "src/common/mutex.h"
