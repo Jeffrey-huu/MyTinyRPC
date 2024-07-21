@@ -5,7 +5,7 @@
 #include "src/net/tcp/net_addr.h"
 #include "src/net/eventloop.h"
 #include "src/net/tcp/tcp_connection.h"
-// #include "src/net/coder/abstract_protocol.h"
+#include "src/net/coder/abstract_protocol.h"
 #include "src/net/timer_event.h"
 
 namespace MyTinyRPC {
@@ -21,10 +21,10 @@ namespace MyTinyRPC {
 			void connect(std::function<void()> done);
 			// 异步的发送 message
 			// 如果发送 message 成功，会调用 done 函数， 函数的入参就是 message 对象 
-			// void writeMessage(AbstractProtocol::s_ptr message, std::function<void(AbstractProtocol::s_ptr)> done);
+			void writeMessage(AbstractProtocol::s_ptr message, std::function<void(AbstractProtocol::s_ptr)> done);
 			// 异步的读取 message
 			// 如果读取 message 成功，会调用 done 函数， 函数的入参就是 message 对象 
-			// void readMessage(const std::string& msg_id, std::function<void(AbstractProtocol::s_ptr)> done);
+			void readMessage(const std::string& msg_id, std::function<void(AbstractProtocol::s_ptr)> done);
 			void stop();
 			int getConnectErrorCode();
 			std::string getConnectErrorInfo();

@@ -62,7 +62,6 @@ namespace MyTinyRPC {
 	};
 
 	class AsyncLogger {
-
 		public:
 			typedef std::shared_ptr<AsyncLogger> s_ptr;
 			AsyncLogger(const std::string& file_name, const std::string& file_path, int max_size);

@@ -3,11 +3,11 @@
 
 #include <memory>
 #include <map>
-#include <queue>
+#include <vector>
 #include "src/net/tcp/net_addr.h"
 #include "src/net/tcp/tcp_buffer.h"
 #include "src/net/io_thread.h"
-// #include "src/net/coder/abstract_coder.h"
+#include "src/net/coder/abstract_coder.h"
 // #include "src/net/rpc/rpc_dispatcher.h"
 
 namespace MyTinyRPC {
@@ -20,7 +20,7 @@ namespace MyTinyRPC {
 
 	enum TcpConnectionType {
 		TcpConnectionByServer = 1,  // 作为服务端使用，代表跟对端客户端的连接
-		TcpConnectionByClient = 2,  // 作为客户端使用，代表跟对赌服务端的连接
+		TcpConnectionByClient = 2,  // 作为客户端使用，代表跟对端服务端的连接
 	};
 
 	class TcpConnection {
@@ -31,7 +31,7 @@ namespace MyTinyRPC {
 			~TcpConnection();
 
 			void onRead();
-			// void excute();
+			void excute();
 			void onWrite();
 			void setState(const TcpState state);
 
@@ -45,14 +45,14 @@ namespace MyTinyRPC {
 			void listenWrite();
 			// 启动监听可读事件
 			void listenRead();
-			// void pushSendMessage(AbstractProtocol::s_ptr message, std::function<void(AbstractProtocol::s_ptr)> done);
-			// void pushReadMessage(const std::string& msg_id, std::function<void(AbstractProtocol::s_ptr)> done);
+			void pushSendMessage(AbstractProtocol::s_ptr message, std::function<void(AbstractProtocol::s_ptr)> done);
+			void pushReadMessage(const std::string& msg_id, std::function<void(AbstractProtocol::s_ptr)> done);
 			NetAddr::s_ptr getLocalAddr();
 			NetAddr::s_ptr getPeerAddr();
-			// void reply(std::vector<AbstractProtocol::s_ptr>& replay_messages);
+			void reply(std::vector<AbstractProtocol::s_ptr>& replay_messages);
 
 		private:
-			EventLoop* m_event_loop {NULL};   // 代表持有该连接的 IO 线程
+			EventLoop* m_event_loop {NULL};   // 代表持有该连接的 Eventloop
 
 			NetAddr::s_ptr m_local_addr;
 			NetAddr::s_ptr m_peer_addr;
@@ -60,15 +60,15 @@ namespace MyTinyRPC {
 			TcpBuffer::s_ptr m_out_buffer;  // 发送缓冲区
 
 			FdEvent* m_fd_event {NULL};
-			// AbstractCoder* m_coder {NULL};
+			AbstractCoder* m_coder {NULL};
 			TcpState m_state;
 			int m_fd {0};
 
 			TcpConnectionType m_connection_type {TcpConnectionByServer};
 			// std::pair<AbstractProtocol::s_ptr, std::function<void(AbstractProtocol::s_ptr)>>
-			// std::vector<std::pair<AbstractProtocol::s_ptr, std::function<void(AbstractProtocol::s_ptr)>>> m_write_dones;
+			std::vector<std::pair<AbstractProtocol::s_ptr, std::function<void(AbstractProtocol::s_ptr)>>> m_write_dones;
 			// key 为 msg_id
-			// std::map<std::string, std::function<void(AbstractProtocol::s_ptr)>> m_read_dones;
+			std::map<std::string, std::function<void(AbstractProtocol::s_ptr)>> m_read_dones;
 	};
 }
 

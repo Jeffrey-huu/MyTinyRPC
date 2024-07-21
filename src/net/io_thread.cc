@@ -36,7 +36,7 @@ namespace MyTinyRPC {
 	void* IOThread::Main(void* arg) {
 		IOThread* thread = static_cast<IOThread*> (arg);
 
-		thread->m_event_loop = new EventLoop();
+		thread->m_event_loop = new EventLoop(); // same as EventLoop::GetCurrentEventLoop()
 		thread->m_thread_id = getThreadId();
 
 		// 唤醒等待的线程

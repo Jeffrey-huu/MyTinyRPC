@@ -1,3 +1,4 @@
+#include <unistd.h>
 #include "src/net/eventloop.h"
 #include "src/net/tcp/tcp_connection.h"
 #include "src/common/log.h"
@@ -34,7 +35,6 @@ namespace MyTinyRPC {
 
 		m_listen_fd_event = new FdEvent(m_acceptor->getListenFd());
 		m_listen_fd_event->listen(FdEvent::IN_EVENT, std::bind(&TcpServer::onAccept, this));
-		
 		m_main_event_loop->addEpollEvent(m_listen_fd_event);
 
 		m_clear_client_timer_event = std::make_shared<TimerEvent>(5000, true, std::bind(&TcpServer::ClearClientTimerFunc, this));
@@ -71,6 +71,7 @@ namespace MyTinyRPC {
 			if ((*it) != nullptr && (*it).use_count() > 0 && (*it)->getState() == Closed) {
 				// need to delete TcpConnection
 				DEBUGLOG("TcpConection [fd:%d] will delete, state=%d", (*it)->getFd(), (*it)->getState());
+				close((*it)->getFd());
 				it = m_client.erase(it);
 			} else {
 				it++;
