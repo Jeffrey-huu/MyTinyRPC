@@ -8,7 +8,7 @@
 #include "src/net/tcp/tcp_buffer.h"
 #include "src/net/io_thread.h"
 #include "src/net/coder/abstract_coder.h"
-// #include "src/net/rpc/rpc_dispatcher.h"
+#include "src/net/rpc/rpc_dispatcher.h"
 
 namespace MyTinyRPC {
 	enum TcpState {

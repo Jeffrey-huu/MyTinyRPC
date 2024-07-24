@@ -64,6 +64,7 @@ namespace MyTinyRPC {
 		signal(SIGKILL, CoredumpHandler);
 		signal(SIGINT, CoredumpHandler);
 		signal(SIGSTKFLT, CoredumpHandler);
+		// printf("init timer success\n");
 	}
 
 	void Logger::syncLoop() {

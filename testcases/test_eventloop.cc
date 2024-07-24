@@ -18,7 +18,7 @@ void test_io_thread() {
 
 	MyTinyRPC::TimerEvent::s_ptr timer_event = std::make_shared<MyTinyRPC::TimerEvent>(
 		1000, true, [&i]() {
-		INFOLOG("trigger timer event, count=%d", i++);
+			INFOLOG("trigger timer event, count=%d", i++);
 		}
 	);
 

@@ -147,7 +147,7 @@ namespace MyTinyRPC {
 						// DEBUGLOG("fd %d trigger EPOLLOUT event", fd_event->getFd())
 						addTask(fd_event->handler(FdEvent::OUT_EVENT));
 					}
-					// EPOLLHUP EPOLLERR
+					// EPOLLHUP EPOLLERR, add automatically
 					if (trigger_event.events & EPOLLERR) {
 						DEBUGLOG("fd %d trigger EPOLLERROR event", fd_event->getFd())
 						// 删除出错的套接字

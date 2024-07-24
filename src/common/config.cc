@@ -43,6 +43,7 @@ namespace MyTinyRPC {
 	Config::Config() {
 		m_log_level = "DEBUG";
 		m_io_threads = 2;
+		m_port = 12345;
 	}
 	
 	Config::Config(const char* xmlfile) {

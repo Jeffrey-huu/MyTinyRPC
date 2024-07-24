@@ -4,3 +4,5 @@ lib/*.a
 obj/*.a
 lib/*.o
 obj/*.o
+log/*
+!log/.gitkeep

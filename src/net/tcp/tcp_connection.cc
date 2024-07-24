@@ -33,7 +33,7 @@ namespace MyTinyRPC {
 	void TcpConnection::onRead() {
 		// 1. 从 socket 缓冲区，调用 系统的 read 函数读取字节到 in_buffer 里面
 		if (m_state != Connected) {
-			ERRORLOG("onRead error, client has already disconneced, addr[%s], clientfd[%d]", m_peer_addr->toString().c_str(), m_fd);
+			ERRORLOG("onRead error, client has not connected, addr[%s], clientfd[%d]", m_peer_addr->toString().c_str(), m_fd);
 			return;
 		}
 
@@ -85,7 +85,7 @@ namespace MyTinyRPC {
 		if (m_connection_type == TcpConnectionByServer) {
 			// 将 RPC 请求执行业务逻辑，获取 RPC 响应, 再把 RPC 响应发送回去
 			std::vector<AbstractProtocol::s_ptr> result;
-			std::vector<AbstractProtocol::s_ptr> reply_msg;
+			// std::vector<AbstractProtocol::s_ptr> reply_msg;
 			m_coder->decode(result, m_in_buffer);
 			for (size_t i = 0;  i < result.size(); ++i) {
 				// 1. 针对每一个请求，调用 rpc 方法，获取响应 message
@@ -93,14 +93,14 @@ namespace MyTinyRPC {
 				INFOLOG("success get request[%s] from client[%s]", result[i]->m_msg_id.c_str(), m_peer_addr->toString().c_str());
 
 				std::shared_ptr<TinyPBProtocol> message = std::make_shared<TinyPBProtocol>();
-				message->m_pb_data = "hello. this is MyTinyRPC rpc test data";
-				message->m_msg_id = result[i]->m_msg_id;
-				reply_msg.emplace_back(message);
+				// message->m_pb_data = "hello. this is MyTinyRPC rpc test data";
+				// message->m_msg_id = result[i]->m_msg_id;
+				// reply_msg.emplace_back(message);
 
-				// RpcDispatcher::GetRpcDispatcher()->dispatch(result[i], message, this);
+				RpcDispatcher::GetRpcDispatcher()->dispatch(result[i], message, this);
 			}
-			m_coder->encode(reply_msg, m_out_buffer);
-			listenWrite();
+			// m_coder->encode(reply_msg, m_out_buffer);
+			// listenWrite();
 		} else {
 			// 从 buffer 里 decode 得到 message 对象, 执行其回调
 			std::vector<AbstractProtocol::s_ptr> result;
